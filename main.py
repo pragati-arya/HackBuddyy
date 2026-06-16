@@ -1,3 +1,5 @@
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -11,6 +13,11 @@ from database import engine, SessionLocal
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.mount(
+    "/static",
+    StaticFiles(directory="frontend"),
+    name="static"
+)
 
 # CORS
 
@@ -28,11 +35,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-
-    return {
-        "message": "Welcome to HackBuddy 🚀"
-    }
-
+    return FileResponse("frontend/index.html")
 
 # =========================
 # Register Student

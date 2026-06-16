@@ -28,7 +28,7 @@ async function registerUser() {
     try {
 
         const response = await fetch(
-            "http://127.0.0.1:8000/register",
+            "https://hackbuddyy.onrender.com/register",
             {
                 method: "POST",
 
@@ -87,7 +87,7 @@ async function findMatch() {
     try {
 
         const response = await fetch(
-            `http://127.0.0.1:8000/top-match/${name}`
+            `https://hackbuddyy.onrender.com/top-match/${name}`
         );
 
         const data =
@@ -119,9 +119,13 @@ async function findMatch() {
 
                 <h3>👤 ${match.name}</h3>
 
-                <p>🏫 ${match.college}</p>
+                <p>
+                    🏫 ${match.college}
+                </p>
 
-                <p>🚀 ${match.project_idea}</p>
+                <p>
+                    🚀 ${match.project_idea}
+                </p>
 
                 <p>
                     🎯 Match Score:
@@ -171,7 +175,7 @@ async function findAllMatches() {
     try {
 
         const response = await fetch(
-            `http://127.0.0.1:8000/match/${name}`
+            `https://hackbuddyy.onrender.com/match/${name}`
         );
 
         const data =
@@ -203,9 +207,13 @@ async function findAllMatches() {
 
                     <h3>👤 ${match.name}</h3>
 
-                    <p>🏫 ${match.college}</p>
+                    <p>
+                        🏫 ${match.college}
+                    </p>
 
-                    <p>🚀 ${match.project_idea}</p>
+                    <p>
+                        🚀 ${match.project_idea}
+                    </p>
 
                     <p>
                         🎯 Match Score:
