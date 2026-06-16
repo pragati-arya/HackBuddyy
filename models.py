@@ -23,8 +23,8 @@ class StudentDB(Base):
 
     interests = Column(String)
 
-    project_idea = Column(String)
-
     domain = Column(String)
 
     looking_for = Column(String)
+
+    delete_code = Column(String)

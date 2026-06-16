@@ -16,14 +16,14 @@ async function registerUser() {
     const interests =
         document.getElementById("interests").value;
 
-    const projectIdea =
-        document.getElementById("projectIdea").value;
-
     const domain =
         document.getElementById("domain").value;
 
     const lookingFor =
         document.getElementById("lookingFor").value;
+
+    const deleteCode =
+        document.getElementById("deleteCode").value;
 
     try {
 
@@ -41,9 +41,9 @@ async function registerUser() {
                     college: college,
                     skills: skills,
                     interests: interests,
-                    project_idea: projectIdea,
                     domain: domain,
-                    looking_for: lookingFor
+                    looking_for: lookingFor,
+                    delete_code: deleteCode
                 })
             }
         );
@@ -121,10 +121,6 @@ async function findMatch() {
 
                 <p>
                     🏫 ${match.college}
-                </p>
-
-                <p>
-                    🚀 ${match.project_idea}
                 </p>
 
                 <p>
@@ -209,10 +205,6 @@ async function findAllMatches() {
 
                     <p>
                         🏫 ${match.college}
-                    </p>
-
-                    <p>
-                        🚀 ${match.project_idea}
                     </p>
 
                     <p>
@@ -303,8 +295,6 @@ async function viewStudents() {
 
                         <p>❤️ ${student.interests}</p>
 
-                        <p>🚀 ${student.project_idea}</p>
-
                         <p>🌍 ${student.domain}</p>
 
                         <p>🔍 Looking For:
@@ -353,12 +343,11 @@ async function deleteStudent() {
     }
 
     try {
-
         const response = await fetch(
-            `https://hackbuddyy.onrender.com/delete-student/${name}`,
-            {
+            `https://hackbuddyy.onrender.com/delete-student/${name}/${deleteCode}`,
+             {
                 method: "DELETE"
-            }
+             }
         );
 
         const data =

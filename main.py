@@ -66,9 +66,9 @@ def register(student: schemas.StudentCreate):
         college=student.college,
         skills=student.skills,
         interests=student.interests,
-        project_idea=student.project_idea,
         domain=student.domain,
-        looking_for=student.looking_for
+        looking_for=student.looking_for,
+        delete_code=student.delete_code
     )
 
     db.add(new_student)
@@ -104,7 +104,6 @@ def get_students():
             "college": student.college,
             "skills": student.skills,
             "interests": student.interests,
-            "project_idea": student.project_idea,
             "domain": student.domain,
             "looking_for": student.looking_for
         })
@@ -116,8 +115,8 @@ def get_students():
 # Delete Student
 # =========================
 
-@app.delete("/delete-student/{name}")
-def delete_student(name: str):
+@app.delete("/delete-student/{name}/{delete_code}")
+def delete_student(name: str, delete_code: str):
 
     db: Session = SessionLocal()
 
@@ -135,6 +134,14 @@ def delete_student(name: str):
             "message": "Student not found"
         }
 
+    if student.delete_code != delete_code:
+
+        db.close()
+
+        return {
+            "message": "Incorrect delete code"
+        }
+
     db.delete(student)
     db.commit()
 
@@ -143,31 +150,6 @@ def delete_student(name: str):
     return {
         "message": f"{name} deleted successfully"
     }
-
-# =========================
-# View Projects
-# =========================
-
-@app.get("/projects")
-def get_projects():
-
-    db: Session = SessionLocal()
-
-    students = db.query(models.StudentDB).all()
-
-    projects = []
-
-    for student in students:
-
-        projects.append({
-            "student": student.name,
-            "project_idea": student.project_idea,
-            "domain": student.domain
-        })
-
-    db.close()
-
-    return projects
 
 
 
@@ -249,7 +231,6 @@ def find_match(name: str):
         matches.append({
             "name": student.name,
             "college": student.college,
-            "project_idea": student.project_idea,
             "domain": student.domain,
             "match_percentage": total_score,
             "common_skills": list(common_skills),
@@ -268,51 +249,6 @@ def find_match(name: str):
         "matches": matches
     }
 
-
-# =========================
-# Search Projects
-# =========================
-
-@app.get("/search-projects/{keyword}")
-def search_projects(keyword: str):
-
-    db: Session = SessionLocal()
-
-    students = db.query(models.StudentDB).all()
-
-    result = []
-
-    keyword = keyword.lower().strip()
-
-    for student in students:
-
-        project_idea = (
-            student.project_idea or ""
-        ).lower()
-
-        domain = (
-            student.domain or ""
-        ).lower()
-
-        skills = (
-            student.skills or ""
-        ).lower()
-
-        if (
-            keyword in project_idea
-            or keyword in domain
-            or keyword in skills
-        ):
-
-            result.append({
-                "student": student.name,
-                "project_idea": student.project_idea,
-                "domain": student.domain
-            })
-
-    db.close()
-
-    return result
 
 
 # =========================
