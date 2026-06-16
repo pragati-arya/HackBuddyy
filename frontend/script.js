@@ -254,5 +254,31 @@ async function findAllMatches() {
                 <h3>❌ Error Loading Matches</h3>
             </div>
         `;
+        
+    }
+}
+
+
+// =========================
+// View Students
+// =========================
+
+async function viewStudents() {
+
+    try {
+
+        const response = await fetch(
+            "https://hackbuddyy.onrender.com/students"
+        );
+
+        const students = await response.json();
+
+        // rest of your code...
+    }
+
+    catch (error) {
+
+        console.log(error);
+
     }
 }
