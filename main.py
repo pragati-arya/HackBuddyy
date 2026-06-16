@@ -13,13 +13,16 @@ from database import engine, SessionLocal
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
 app.mount(
     "/static",
     StaticFiles(directory="frontend"),
     name="static"
 )
 
+# =========================
 # CORS
+# =========================
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,6 +39,7 @@ app.add_middleware(
 @app.get("/")
 def home():
     return FileResponse("frontend/index.html")
+
 
 # =========================
 # Register Student
@@ -66,9 +70,9 @@ def register(student: schemas.StudentCreate):
         college=student.college,
         skills=student.skills,
         interests=student.interests,
+        project_idea=student.project_idea,
         domain=student.domain,
-        looking_for=student.looking_for,
-        delete_code=student.delete_code
+        looking_for=student.looking_for
     )
 
     db.add(new_student)
@@ -104,6 +108,7 @@ def get_students():
             "college": student.college,
             "skills": student.skills,
             "interests": student.interests,
+            "project_idea": student.project_idea,
             "domain": student.domain,
             "looking_for": student.looking_for
         })
@@ -111,46 +116,32 @@ def get_students():
     db.close()
 
     return result
+
+
 # =========================
-# Delete Student
+# View Projects
 # =========================
 
-@app.delete("/delete-student/{name}/{delete_code}")
-def delete_student(name: str, delete_code: str):
+@app.get("/projects")
+def get_projects():
 
     db: Session = SessionLocal()
 
-    student = (
-        db.query(models.StudentDB)
-        .filter(models.StudentDB.name == name)
-        .first()
-    )
+    students = db.query(models.StudentDB).all()
 
-    if not student:
+    projects = []
 
-        db.close()
+    for student in students:
 
-        return {
-            "message": "Student not found"
-        }
-
-    if student.delete_code != delete_code:
-
-        db.close()
-
-        return {
-            "message": "Incorrect delete code"
-        }
-
-    db.delete(student)
-    db.commit()
+        projects.append({
+            "student": student.name,
+            "project_idea": student.project_idea,
+            "domain": student.domain
+        })
 
     db.close()
 
-    return {
-        "message": f"{name} deleted successfully"
-    }
-
+    return projects
 
 
 # =========================
@@ -231,6 +222,7 @@ def find_match(name: str):
         matches.append({
             "name": student.name,
             "college": student.college,
+            "project_idea": student.project_idea,
             "domain": student.domain,
             "match_percentage": total_score,
             "common_skills": list(common_skills),
@@ -249,6 +241,51 @@ def find_match(name: str):
         "matches": matches
     }
 
+
+# =========================
+# Search Projects
+# =========================
+
+@app.get("/search-projects/{keyword}")
+def search_projects(keyword: str):
+
+    db: Session = SessionLocal()
+
+    students = db.query(models.StudentDB).all()
+
+    result = []
+
+    keyword = keyword.lower().strip()
+
+    for student in students:
+
+        project_idea = (
+            student.project_idea or ""
+        ).lower()
+
+        domain = (
+            student.domain or ""
+        ).lower()
+
+        skills = (
+            student.skills or ""
+        ).lower()
+
+        if (
+            keyword in project_idea
+            or keyword in domain
+            or keyword in skills
+        ):
+
+            result.append({
+                "student": student.name,
+                "project_idea": student.project_idea,
+                "domain": student.domain
+            })
+
+    db.close()
+
+    return result
 
 
 # =========================

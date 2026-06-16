@@ -4,74 +4,76 @@
 
 async function registerUser() {
 
-    const name =
-        document.getElementById("name").value;
+```
+const name =
+    document.getElementById("name").value;
 
-    const college =
-        document.getElementById("college").value;
+const college =
+    document.getElementById("college").value;
 
-    const skills =
-        document.getElementById("skills").value;
+const skills =
+    document.getElementById("skills").value;
 
-    const interests =
-        document.getElementById("interests").value;
+const interests =
+    document.getElementById("interests").value;
 
-    const domain =
-        document.getElementById("domain").value;
+const projectIdea =
+    document.getElementById("projectIdea").value;
 
-    const lookingFor =
-        document.getElementById("lookingFor").value;
+const domain =
+    document.getElementById("domain").value;
 
-    const deleteCode =
-        document.getElementById("deleteCode").value;
+const lookingFor =
+    document.getElementById("lookingFor").value;
 
-    try {
+try {
 
-        const response = await fetch(
-            "https://hackbuddyy.onrender.com/register",
-            {
-                method: "POST",
+    const response = await fetch(
+        "https://hackbuddyy.onrender.com/register",
+        {
+            method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                body: JSON.stringify({
-                    name: name,
-                    college: college,
-                    skills: skills,
-                    interests: interests,
-                    domain: domain,
-                    looking_for: lookingFor,
-                    delete_code: deleteCode
-                })
-            }
-        );
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-
-            alert(data.detail);
-
-            return;
+            body: JSON.stringify({
+                name: name,
+                college: college,
+                skills: skills,
+                interests: interests,
+                project_idea: projectIdea,
+                domain: domain,
+                looking_for: lookingFor
+            })
         }
+    );
 
-        alert(
-            "✅ Student Registered Successfully"
-        );
+    const data =
+        await response.json();
 
-    } catch (error) {
+    if (!response.ok) {
 
-        console.log(error);
+        alert(data.detail);
 
-        alert(
-            "❌ Unable to connect to backend"
-        );
+        return;
     }
-}
 
+    alert(
+        "✅ Student Registered Successfully"
+    );
+
+} catch (error) {
+
+    console.log(error);
+
+    alert(
+        "❌ Unable to connect to backend"
+    );
+}
+```
+
+}
 
 // =========================
 // Find Best Match
@@ -79,48 +81,143 @@ async function registerUser() {
 
 async function findMatch() {
 
-    const name =
-        document.getElementById(
-            "searchName"
-        ).value;
+```
+const name =
+    document.getElementById(
+        "searchName"
+    ).value;
 
-    try {
+try {
 
-        const response = await fetch(
-            `https://hackbuddyy.onrender.com/top-match/${name}`
-        );
+    const response = await fetch(
+        `https://hackbuddyy.onrender.com/top-match/${name}`
+    );
 
-        const data =
-            await response.json();
+    const data =
+        await response.json();
 
-        if (data.message) {
-
-            document.getElementById(
-                "results"
-            ).innerHTML = `
-                <div class="result-box">
-                    <h3>${data.message}</h3>
-                </div>
-            `;
-
-            return;
-        }
-
-        const match =
-            data.best_match;
+    if (data.message) {
 
         document.getElementById(
             "results"
         ).innerHTML = `
+            <div class="result-box">
+                <h3>${data.message}</h3>
+            </div>
+        `;
 
-            <div class="card">
+        return;
+    }
 
-                <h2>🎯 Best Match Found</h2>
+    const match =
+        data.best_match;
+
+    document.getElementById(
+        "results"
+    ).innerHTML = `
+
+        <div class="card">
+
+            <h2>🎯 Best Match Found</h2>
+
+            <h3>👤 ${match.name}</h3>
+
+            <p>
+                🏫 ${match.college}
+            </p>
+
+            <p>
+                🚀 ${match.project_idea}
+            </p>
+
+            <p>
+                🎯 Match Score:
+                ${match.match_percentage}%
+            </p>
+
+            <p>
+                💻 Common Skills:
+                ${match.common_skills.join(", ")}
+            </p>
+
+            <p>
+                ❤️ Common Interests:
+                ${match.common_interests.join(", ")}
+            </p>
+
+        </div>
+
+    `;
+
+} catch (error) {
+
+    console.log(error);
+
+    document.getElementById(
+        "results"
+    ).innerHTML = `
+        <div class="result-box">
+            <h3>❌ Backend Not Running</h3>
+        </div>
+    `;
+}
+```
+
+}
+
+// =========================
+// View All Matches
+// =========================
+
+async function findAllMatches() {
+
+```
+const name =
+    document.getElementById(
+        "searchName"
+    ).value;
+
+try {
+
+    const response = await fetch(
+        `https://hackbuddyy.onrender.com/match/${name}`
+    );
+
+    const data =
+        await response.json();
+
+    if (!data.matches) {
+
+        document.getElementById(
+            "results"
+        ).innerHTML = `
+            <div class="result-box">
+                <h3>No Matches Found</h3>
+            </div>
+        `;
+
+        return;
+    }
+
+    let html = `
+        <div class="card">
+            <h2>🏆 Top Matches</h2>
+    `;
+
+    data.matches.forEach(match => {
+
+        html += `
+
+            <div class="result-box">
 
                 <h3>👤 ${match.name}</h3>
 
                 <p>
                     🏫 ${match.college}
+                </p>
+
+                <p>
+                    🚀 ${match.project_idea}
                 </p>
 
                 <p>
@@ -140,238 +237,109 @@ async function findMatch() {
 
             </div>
 
+            <br>
+
         `;
+    });
 
-    } catch (error) {
+    html += "</div>";
 
-        console.log(error);
+    document.getElementById(
+        "results"
+    ).innerHTML = html;
 
-        document.getElementById(
-            "results"
-        ).innerHTML = `
-            <div class="result-box">
-                <h3>❌ Backend Not Running</h3>
-            </div>
-        `;
-    }
+} catch (error) {
+
+    console.log(error);
+
+    document.getElementById(
+        "results"
+    ).innerHTML = `
+        <div class="result-box">
+            <h3>❌ Error Loading Matches</h3>
+        </div>
+    `;
 }
+```
 
-
-// =========================
-// View All Matches
-// =========================
-
-async function findAllMatches() {
-
-    const name =
-        document.getElementById(
-            "searchName"
-        ).value;
-
-    try {
-
-        const response = await fetch(
-            `https://hackbuddyy.onrender.com/match/${name}`
-        );
-
-        const data =
-            await response.json();
-
-        if (!data.matches) {
-
-            document.getElementById(
-                "results"
-            ).innerHTML = `
-                <div class="result-box">
-                    <h3>No Matches Found</h3>
-                </div>
-            `;
-
-            return;
-        }
-
-        let html = `
-            <div class="card">
-                <h2>🏆 Top Matches</h2>
-        `;
-
-        data.matches.forEach(match => {
-
-            html += `
-
-                <div class="result-box">
-
-                    <h3>👤 ${match.name}</h3>
-
-                    <p>
-                        🏫 ${match.college}
-                    </p>
-
-                    <p>
-                        🎯 Match Score:
-                        ${match.match_percentage}%
-                    </p>
-
-                    <p>
-                        💻 Common Skills:
-                        ${match.common_skills.join(", ")}
-                    </p>
-
-                    <p>
-                        ❤️ Common Interests:
-                        ${match.common_interests.join(", ")}
-                    </p>
-
-                </div>
-
-                <br>
-
-            `;
-        });
-
-        html += "</div>";
-
-        document.getElementById(
-            "results"
-        ).innerHTML = html;
-
-    } catch (error) {
-
-        console.log(error);
-
-        document.getElementById(
-            "results"
-        ).innerHTML = `
-            <div class="result-box">
-                <h3>❌ Error Loading Matches</h3>
-            </div>
-        `;
-        
-    }
 }
-
 
 // =========================
 // View Students
 // =========================
 
-
-
 async function viewStudents() {
 
-    try {
+```
+try {
 
-        const response = await fetch(
-            "https://hackbuddyy.onrender.com/students"
-        );
+    const response = await fetch(
+        "https://hackbuddyy.onrender.com/students"
+    );
 
-        const students = await response.json();
+    const students =
+        await response.json();
 
-        let html = `
-            <div class="card">
-                <h2>👥 Registered Students</h2>
+    let html = `
+        <div class="card">
+            <h2>👥 Registered Students</h2>
+    `;
+
+    if (students.length === 0) {
+
+        html += `
+            <div class="result-box">
+                <h3>No Students Found</h3>
+            </div>
         `;
 
-        if (students.length === 0) {
+    } else {
+
+        students.forEach(student => {
 
             html += `
                 <div class="result-box">
-                    <h3>No Students Found</h3>
+
+                    <h3>👤 ${student.name}</h3>
+
+                    <p>🏫 ${student.college}</p>
+
+                    <p>💻 ${student.skills}</p>
+
+                    <p>❤️ ${student.interests}</p>
+
+                    <p>🚀 ${student.project_idea}</p>
+
+                    <p>🌍 ${student.domain}</p>
+
+                    <p>🔍 Looking For:
+                    ${student.looking_for}</p>
+
                 </div>
+
+                <br>
             `;
-
-        } else {
-
-            students.forEach(student => {
-
-                html += `
-                    <div class="result-box">
-
-                        <h3>👤 ${student.name}</h3>
-
-                        <p>🏫 ${student.college}</p>
-
-                        <p>💻 ${student.skills}</p>
-
-                        <p>❤️ ${student.interests}</p>
-
-                        <p>🌍 ${student.domain}</p>
-
-                        <p>🔍 Looking For:
-                        ${student.looking_for}</p>
-
-                    </div>
-
-                    <br>
-                `;
-            });
-        }
-
-        html += "</div>";
-
-        document.getElementById(
-            "results"
-        ).innerHTML = html;
-
-    } catch (error) {
-
-        console.log(error);
-
-        document.getElementById(
-            "results"
-        ).innerHTML = `
-            <div class="result-box">
-                <h3>❌ Unable to load students</h3>
-            </div>
-        `;
+        });
     }
+
+    html += "</div>";
+
+    document.getElementById(
+        "results"
+    ).innerHTML = html;
+
+} catch (error) {
+
+    console.log(error);
+
+    document.getElementById(
+        "results"
+    ).innerHTML = `
+        <div class="result-box">
+            <h3>❌ Unable to load students</h3>
+        </div>
+    `;
 }
-// =========================
-// Delete Student
-// =========================
+```
 
-async function deleteStudent() {
-
-    const name =
-        document.getElementById("name").value;
-
-    if (!name) {
-
-        alert("Enter your name first");
-
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `https://hackbuddyy.onrender.com/delete-student/${name}/${deleteCode}`,
-             {
-                method: "DELETE"
-             }
-        );
-
-        const data =
-            await response.json();
-
-        
-        alert(data.message);
-
-        document.getElementById("name").value = "";
-        document.getElementById("college").value = "";
-        document.getElementById("skills").value = "";
-        document.getElementById("interests").value = "";
-        document.getElementById("projectIdea").value = "";
-        document.getElementById("domain").value = "";
-        document.getElementById("lookingFor").value = "";
-
-viewStudents();
-
-    } catch (error) {
-
-        console.log(error);
-
-        alert(
-            "❌ Unable to delete account"
-        );
-    }
 }

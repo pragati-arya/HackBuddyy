@@ -11,11 +11,11 @@ class StudentCreate(BaseModel):
 
     interests: str
 
+    project_idea: str
+
     domain: str
 
     looking_for: str
-
-    delete_code: str
 
 
 class StudentResponse(BaseModel):
@@ -30,10 +30,11 @@ class StudentResponse(BaseModel):
 
     interests: str
 
+    project_idea: str
+
     domain: str
 
     looking_for: str
-
 
     class Config:
         from_attributes = True
