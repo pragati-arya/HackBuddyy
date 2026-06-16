@@ -170,38 +170,6 @@ def get_projects():
     return projects
 
 
-# =========================
-# Projects By Domain
-# =========================
-
-@app.get("/projects-by-domain/{domain}")
-def projects_by_domain(domain: str):
-
-    db: Session = SessionLocal()
-
-    students = db.query(models.StudentDB).all()
-
-    result = []
-
-    search_term = domain.lower().strip()
-
-    for student in students:
-
-        if (
-            student.domain
-            and search_term in student.domain.lower()
-        ):
-
-            result.append({
-                "student": student.name,
-                "project_idea": student.project_idea,
-                "domain": student.domain
-            })
-
-    db.close()
-
-    return result
-
 
 # =========================
 # Team Matching
