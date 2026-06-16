@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackBuddy</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+
+    <div class="background">
+
+        <div class="rocket r1">🚀</div>
+        <div class="rocket r2">🚀</div>
+        <div class="rocket r3">🚀</div>
+        <div class="rocket r4">🚀</div>
+        <div class="rocket r5">🚀</div>
+        <div class="rocket r6">🚀</div>
+
+        <div class="star s1">✦</div>
+        <div class="star s2">✦</div>
+        <div class="star s3">✦</div>
+        <div class="star s4">✦</div>
+        <div class="star s5">✦</div>
+        <div class="star s6">✦</div>
+
+    </div>
+
+    <!-- Hero -->
+
+    <section class="hero">
+
+        <h1>🧠 HackBuddy 💡</h1>
+
+        <p>Build Your Dream Hackathon Team.</p>
+
+    </section>
+
+    <!-- Create Profile -->
+
+    <div class="card">
+
+        <h2>👤 Create Your Profile</h2>
+
+        <input
+            id="name"
+            type="text"
+            placeholder="Name">
+
+        <input
+            id="college"
+            type="text"
+            placeholder="College">
+
+        <input
+            id="skills"
+            type="text"
+            placeholder="Skills (Python, AI, Android)">
+
+        <input
+            id="interests"
+            type="text"
+            placeholder="Interests">
+
+        <input
+            id="projectIdea"
+            type="text"
+            placeholder="Project Idea">
+
+        <input
+            id="domain"
+            type="text"
+            placeholder="Domain (AI, Health & Education, Environment, Sports)">
+
+        <input
+            id="lookingFor"
+            type="text"
+            placeholder="Looking For (Frontend Developer, UI/UX Designer, AI Engineer)">
+
+        <button onclick="registerUser()">
+            🚀 Create Profile
+        </button>
+
+    </div>
+
+    <!-- Find Team -->
+
+    <div class="card">
+
+        <h2>🤝 Find Your Team</h2>
+
+        <input
+            id="searchName"
+            type="text"
+            placeholder="Enter Your Name">
+
+        <button onclick="findMatch()">
+            🎯 Find Best Match
+        </button>
+
+        <br><br>
+
+        <button onclick="findAllMatches()">
+            🏆 View All Matches
+        </button>
+
+    </div>
+
+    <!-- Results -->
+
+    <div id="results">
+
+        <div class="result-box">
+
+            <h3>🎉 Welcome to HackBuddy</h3>
+
+            <p>
+                Create your profile and discover
+                teammates who match your skills,
+                interests, and project goals.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2025 HackBuddy 💡
+
+        <br><br>
+
+        Connect • Collaborate • Create 🚀
+
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
