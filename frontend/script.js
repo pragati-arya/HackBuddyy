@@ -263,6 +263,10 @@ async function findAllMatches() {
 // View Students
 // =========================
 
+// =========================
+// View Students
+// =========================
+
 async function viewStudents() {
 
     try {
@@ -273,12 +277,64 @@ async function viewStudents() {
 
         const students = await response.json();
 
-        // rest of your code...
-    }
+        let html = `
+            <div class="card">
+                <h2>👥 Registered Students</h2>
+        `;
 
-    catch (error) {
+        if (students.length === 0) {
+
+            html += `
+                <div class="result-box">
+                    <h3>No Students Found</h3>
+                </div>
+            `;
+
+        } else {
+
+            students.forEach(student => {
+
+                html += `
+                    <div class="result-box">
+
+                        <h3>👤 ${student.name}</h3>
+
+                        <p>🏫 ${student.college}</p>
+
+                        <p>💻 ${student.skills}</p>
+
+                        <p>❤️ ${student.interests}</p>
+
+                        <p>🚀 ${student.project_idea}</p>
+
+                        <p>🌍 ${student.domain}</p>
+
+                        <p>🔍 Looking For:
+                        ${student.looking_for}</p>
+
+                    </div>
+
+                    <br>
+                `;
+            });
+        }
+
+        html += "</div>";
+
+        document.getElementById(
+            "results"
+        ).innerHTML = html;
+
+    } catch (error) {
 
         console.log(error);
 
+        document.getElementById(
+            "results"
+        ).innerHTML = `
+            <div class="result-box">
+                <h3>❌ Unable to load students</h3>
+            </div>
+        `;
     }
 }
