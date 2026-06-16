@@ -112,7 +112,37 @@ def get_students():
     db.close()
 
     return result
+# =========================
+# Delete Student
+# =========================
 
+@app.delete("/delete-student/{name}")
+def delete_student(name: str):
+
+    db: Session = SessionLocal()
+
+    student = (
+        db.query(models.StudentDB)
+        .filter(models.StudentDB.name == name)
+        .first()
+    )
+
+    if not student:
+
+        db.close()
+
+        return {
+            "message": "Student not found"
+        }
+
+    db.delete(student)
+    db.commit()
+
+    db.close()
+
+    return {
+        "message": f"{name} deleted successfully"
+    }
 
 # =========================
 # View Projects
