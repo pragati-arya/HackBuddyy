@@ -364,7 +364,18 @@ async function deleteStudent() {
         const data =
             await response.json();
 
+        
         alert(data.message);
+
+        document.getElementById("name").value = "";
+        document.getElementById("college").value = "";
+        document.getElementById("skills").value = "";
+        document.getElementById("interests").value = "";
+        document.getElementById("projectIdea").value = "";
+        document.getElementById("domain").value = "";
+        document.getElementById("lookingFor").value = "";
+
+viewStudents();
 
     } catch (error) {
 
