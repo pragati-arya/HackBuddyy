@@ -263,9 +263,7 @@ async function findAllMatches() {
 // View Students
 // =========================
 
-// =========================
-// View Students
-// =========================
+
 
 async function viewStudents() {
 
@@ -336,5 +334,44 @@ async function viewStudents() {
                 <h3>❌ Unable to load students</h3>
             </div>
         `;
+    }
+}
+// =========================
+// Delete Student
+// =========================
+
+async function deleteStudent() {
+
+    const name =
+        document.getElementById("name").value;
+
+    if (!name) {
+
+        alert("Enter your name first");
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `https://hackbuddyy.onrender.com/delete-student/${name}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data =
+            await response.json();
+
+        alert(data.message);
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert(
+            "❌ Unable to delete account"
+        );
     }
 }
