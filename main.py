@@ -208,21 +208,28 @@ def find_match(name: str):
             other_interests
         )
 
+        total_skills = len(
+            current_skills.union(other_skills)
+        )
+
+        total_interests = len(
+            current_interests.union(other_interests)
+        )
+
         skill_score = (
             len(common_skills)
-            / max(len(current_skills), 1)
+            / max(total_skills, 1)
         ) * 70
 
         interest_score = (
             len(common_interests)
-            / max(len(current_interests), 1)
+            / max(total_interests, 1)
         ) * 30
 
         total_score = round(
             skill_score + interest_score,
             2
         )
-
         matches.append({
             "name": student.name,
             "college": student.college,
