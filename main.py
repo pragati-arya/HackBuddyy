@@ -155,7 +155,10 @@ def find_match(name: str):
 
     current_student = (
         db.query(models.StudentDB)
-        .filter(models.StudentDB.name == name)
+        .filter(
+            func.lower(models.StudentDB.name)
+            == name.strip().lower()
+        )
         .first()
     )
 
