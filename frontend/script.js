@@ -177,14 +177,16 @@ async function findAllMatches() {
 
     } catch (error) {
 
-        console.error(error);
+    console.log("ERROR:", error);
 
-        document.getElementById("results").innerHTML = `
-            <div class="result-box">
-                <h3>❌ Error Loading Matches</h3>
-            </div>
-        `;
-    }
+    document.getElementById(
+        "results"
+    ).innerHTML = `
+        <div class="result-box">
+            <h3>❌ ${error}</h3>
+        </div>
+    `;
+}
 }
 
 
