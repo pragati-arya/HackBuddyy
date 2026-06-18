@@ -1,6 +1,28 @@
 // =========================
 // Register Student
 // =========================
+let selectedAvatar = "avatar1.jpeg";
+function selectAvatar(avatarFile){
+
+    selectedAvatar = avatarFile;
+
+    document.getElementById(
+        "selectedAvatarPreview"
+    ).src =
+        "/static/avatars/" + avatarFile;
+
+    document
+        .querySelectorAll(".avatar-option")
+        .forEach(avatar => {
+            avatar.classList.remove(
+                "avatar-selected"
+            );
+        });
+
+    event.target.classList.add(
+        "avatar-selected"
+    );
+}
 
 async function registerUser() {
 
@@ -15,7 +37,7 @@ async function registerUser() {
     try {
 
         const response = await fetch(
-            "https://hackbuddyy.onrender.com/register",
+            "/register",
             {
                 method: "POST",
                 headers: {
@@ -28,7 +50,8 @@ async function registerUser() {
                     interests: interests,
                     project_idea: projectIdea,
                     domain: domain,
-                    looking_for: lookingFor
+                    looking_for: lookingFor,
+                    avatar: selectedAvatar
                 })
             }
         );
@@ -60,8 +83,8 @@ async function findMatch() {
 
     try {
 
-        const response = await fetch(
-            `https://hackbuddyy.onrender.com/top-match/${name}`
+        const response = await fetch(`/top-match/${name}`
+            
         );
 
         const data = await response.json();
@@ -123,8 +146,7 @@ async function findAllMatches() {
 
     try {
 
-        const response = await fetch(
-            `https://hackbuddyy.onrender.com/match/${name}`
+        const response = await fetch(`/match/${name}`
         );
 
         const data = await response.json();
@@ -198,9 +220,8 @@ async function viewStudents() {
 
     try {
 
-        const response = await fetch(
-            "https://hackbuddyy.onrender.com/students"
-        );
+        const response = await fetch("/students")
+        ;
 
         const students = await response.json();
 
@@ -224,19 +245,28 @@ async function viewStudents() {
                 html += `
                     <div class="result-box">
 
-                        <h3>👤 ${student.name}</h3>
+                        <div style="text-align:center;">
 
-                        <p>🏫 ${student.college}</p>
+                            <img
+                                src="/static/avatars/${student.avatar}"
+                                class="student-avatar">
+    
 
-                        <p>💻 ${student.skills}</p>
+                            <h3>👤 ${student.name}</h3>
 
-                        <p>❤️ ${student.interests}</p>
+                        </div>
 
-                        <p>🚀 ${student.project_idea}</p>
+                        <p>college🏫 ${student.college}</p>
 
-                        <p>🌍 ${student.domain}</p>
+                        <p>skills💻 ${student.skills}</p>
 
-                        <p>🔍 Looking For:
+                        <p>Intrests❤️ ${student.interests}</p>
+
+                        <p>Project Idea🚀 ${student.project_idea}</p>
+
+                        <p>Domain🌍 ${student.domain}</p>
+
+                        <p>Looking for🔍:
                         ${student.looking_for}</p>
 
                     </div>

@@ -28,3 +28,5 @@ class StudentDB(Base):
     domain = Column(String)
 
     looking_for = Column(String)
+
+    avatar = Column(String)

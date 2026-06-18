@@ -17,6 +17,8 @@ class StudentCreate(BaseModel):
 
     looking_for: str
 
+    avatar: str
+
 
 class StudentResponse(BaseModel):
 
@@ -35,6 +37,8 @@ class StudentResponse(BaseModel):
     domain: str
 
     looking_for: str
+
+    avatar: str
 
     class Config:
         from_attributes = True

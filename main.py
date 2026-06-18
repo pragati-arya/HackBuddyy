@@ -73,7 +73,8 @@ def register(student: schemas.StudentCreate):
         interests=student.interests,
         project_idea=student.project_idea,
         domain=student.domain,
-        looking_for=student.looking_for
+        looking_for=student.looking_for,
+        avatar=student.avatar
     )
 
     db.add(new_student)
@@ -111,7 +112,9 @@ def get_students():
             "interests": student.interests,
             "project_idea": student.project_idea,
             "domain": student.domain,
-            "looking_for": student.looking_for
+            "looking_for": student.looking_for,
+            "avatar": student.avatar
+
         })
 
     db.close()
