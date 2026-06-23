@@ -32,6 +32,11 @@ async function registerUser() {
     const projectIdea = document.getElementById("projectIdea").value;
     const domain = document.getElementById("domain").value;
     const lookingFor = document.getElementById("lookingFor").value;
+
+    console.log("VALIDATION RUNNING");
+    console.log("College =", college);
+    console.log("Skills =", skills);
+    console.log("Name =", name);
     if (
         !name.trim() ||
         !college.trim() ||
