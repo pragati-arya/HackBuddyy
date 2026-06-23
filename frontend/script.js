@@ -252,7 +252,7 @@ async function viewStudents() {
                         <div style="text-align:center;">
 
                             <img
-                                src="/static/avatars/${student.avatar}"
+                                src="/static/avatars/${student.avatar || 'avatar1.jpeg'}"
                                 class="student-avatar">
     
 
