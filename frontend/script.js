@@ -109,6 +109,9 @@ async function findMatch() {
             <div class="card">
 
                 <h2>🎯 Best Match Found</h2>
+                <img
+                    src="/static/avatars/${match.avatar}"
+                    class="student-avatar">
 
                 <h3>👤 ${match.name}</h3>
 
@@ -175,6 +178,9 @@ async function findAllMatches() {
 
             html += `
                 <div class="result-box">
+                    <img
+                        src="/static/avatars/${match.avatar}"
+                        class="student-avatar">
 
                     <h3>👤 ${match.name}</h3>
 

@@ -250,6 +250,7 @@ def find_match(name: str):
             "college": student.college,
             "project_idea": student.project_idea,
             "domain": student.domain,
+            "avatar": student.avatar,
             "match_percentage": total_score,
             "common_skills": list(common_skills),
             "common_interests": list(common_interests)
