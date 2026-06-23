@@ -12,6 +12,17 @@ from database import engine, SessionLocal
 
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
+from sqlalchemy import text
+
+with engine.connect() as conn:
+    try:
+        conn.execute(
+            text("ALTER TABLE students ADD COLUMN avatar VARCHAR(255)")
+        )
+        conn.commit()
+        print("Avatar column added")
+    except Exception as e:
+        print("Avatar column already exists or error:", e)
 
 app = FastAPI()
 
