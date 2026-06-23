@@ -59,6 +59,15 @@ def home():
 
 @app.post("/register")
 def register(student: schemas.StudentCreate):
+    if (
+        not student.name.strip()
+        or not student.college.strip()
+        or not student.skills.strip()
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Name, College and Skills are mandatory"
+        )
 
     db: Session = SessionLocal()
 
