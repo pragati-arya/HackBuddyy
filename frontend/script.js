@@ -32,6 +32,9 @@ async function registerUser() {
     const projectIdea = document.getElementById("projectIdea").value;
     const domain = document.getElementById("domain").value;
     const lookingFor = document.getElementById("lookingFor").value;
+    const linkedin = document.getElementById("linkedin").value;
+    const github = document.getElementById("github").value;
+    const portfolio = document.getElementById("portfolio").value;
 
     console.log("VALIDATION RUNNING");
     console.log("College =", college);
@@ -65,7 +68,10 @@ async function registerUser() {
                     project_idea: projectIdea,
                     domain: domain,
                     looking_for: lookingFor,
-                    avatar: selectedAvatar
+                    avatar: selectedAvatar,
+                    linkedin: linkedin,
+                    github: github,
+                    portfolio: portfolio,
                 })
             }
         );
@@ -89,6 +95,9 @@ async function registerUser() {
         document.getElementById("projectIdea").value = "";
         document.getElementById("domain").value = "";
         document.getElementById("lookingFor").value = "";
+        document.getElementById("linkedin").value = "";
+        document.getElementById("github").value = "";
+        document.getElementById("portfolio").value = "";
         
         selectedAvatar = "avatar1.jpeg";
         
@@ -125,8 +134,24 @@ async function findMatch() {
         if (data.message) {
 
             document.getElementById("results").innerHTML = `
-                <div class="result-box">
-                    <h3>${data.message}</h3>
+                <div class="card">
+            
+                    <h2>🎯 Best Match Found</h2>
+            
+                    <img
+                        src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
+                        class="student-avatar">
+            
+                    <h3>👤 ${match.name}</h3>
+            
+                    <p>🎯 Match Score:
+                    ${match.match_percentage}%</p>
+            
+                    <button
+                        onclick="openProfile(${match.id})">
+                        View Profile
+                    </button>
+            
                 </div>
             `;
             return;
@@ -144,17 +169,14 @@ async function findMatch() {
 
                 <h3>👤 ${match.name}</h3>
 
-                <p>🏫 ${match.college}</p>
-
-                <p>🚀 ${match.project_idea}</p>
+                
 
                 <p>🎯 Match Score: ${match.match_percentage}%</p>
 
-                <p>💻 Common Skills:
-                ${match.common_skills.join(", ")}</p>
-
-                <p>❤️ Common Interests:
-                ${match.common_interests.join(", ")}</p>
+                <button
+                    onclick="openProfile(${match.id})">
+                    View Profile
+                </button>
 
             </div>
         `;
@@ -204,33 +226,29 @@ async function findAllMatches() {
         `;
 
         data.matches.forEach(match => {
+        html += `
+        <div class="result-box">
+        
+            <img
+                src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
+                class="student-avatar">
+        
+            <h3>👤 ${match.name}</h3>
+        
+            <p>🎯 Match Score:
+            ${match.match_percentage}%</p>
+        
+            <button
+                onclick="openProfile(${match.id})">
+                View Profile
+            </button>
+        
+        </div>
+        
+        <br>
+        `;
 
-            html += `
-                <div class="result-box">
-                    <img
-                        src="/static/avatars/${match.avatar}"
-                        class="student-avatar">
-
-                    <h3>👤 ${match.name}</h3>
-
-                    <p>🏫 ${match.college}</p>
-
-                    <p>🚀 ${match.project_idea}</p>
-
-                    <p>🎯 Match Score:
-                    ${match.match_percentage}%</p>
-
-                    <p>💻 Common Skills:
-                    ${match.common_skills.join(", ")}</p>
-
-                    <p>❤️ Common Interests:
-                    ${match.common_interests.join(", ")}</p>
-
-                </div>
-
-                <br>
-            `;
-        });
+        });    
 
         html += "</div>";
 
@@ -281,38 +299,32 @@ async function viewStudents() {
 
             students.forEach(student => {
 
-                html += `
-                    <div class="result-box">
+    html += `
+        <div class="result-box">
 
-                        <div style="text-align:center;">
+            <div style="text-align:center;">
 
-                            <img
-                                src="/static/avatars/${student.avatar || 'avatar1.jpeg'}"
-                                class="student-avatar">
-    
+                <img
+                    src="/static/avatars/${student.avatar || 'avatar1.jpeg'}"
+                    class="student-avatar">
 
-                            <h3>👤 ${student.name}</h3>
+                <h3>👤 ${student.name}</h3>
 
-                        </div>
+                <p>🏫 ${student.college}</p>
 
-                        <p>college🏫 ${student.college}</p>
+                <button
+                    onclick="openProfile(${student.id})">
+                    View Profile
+                </button>
 
-                        <p>skills💻 ${student.skills}</p>
+            </div>
 
-                        <p>Intrests❤️ ${student.interests}</p>
+        </div>
 
-                        <p>Project Idea🚀 ${student.project_idea}</p>
-
-                        <p>Domain🌍 ${student.domain}</p>
-
-                        <p>Looking for🔍:
-                        ${student.looking_for}</p>
-
-                    </div>
-
-                    <br>
-                `;
-            });
+        <br>
+    `;
+});
+                
         }
 
         html += "</div>";
@@ -329,4 +341,9 @@ async function viewStudents() {
             </div>
         `;
     }
+}
+function openProfile(studentId){
+
+    window.location.href =
+        `/profile?id=${studentId}`;
 }

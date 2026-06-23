@@ -161,7 +161,10 @@ def get_students():
             "project_idea": student.project_idea,
             "domain": student.domain,
             "looking_for": student.looking_for,
-            "avatar": student.avatar
+            "avatar": student.avatar,
+            "linkedin": student.linkedin,
+            "github": student.github,
+            "portfolio": student.portfolio,
 
         })
 
@@ -283,14 +286,11 @@ def find_match(name: str):
             2
         )
         matches.append({
-            "name": student.name,
-            "college": student.college,
-            "project_idea": student.project_idea,
-            "domain": student.domain,
+            "id": student.id,
             "avatar": student.avatar,
+            "name": student.name,
             "match_percentage": total_score,
-            "common_skills": list(common_skills),
-            "common_interests": list(common_interests)
+           
         })
 
     matches.sort(
