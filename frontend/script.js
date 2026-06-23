@@ -32,6 +32,16 @@ async function registerUser() {
     const projectIdea = document.getElementById("projectIdea").value;
     const domain = document.getElementById("domain").value;
     const lookingFor = document.getElementById("lookingFor").value;
+    if (
+        !name.trim() ||
+        !college.trim() ||
+        !skills.trim()
+    ){
+        alert(
+            "⚠️ Name, College and Skills are mandatory!"
+        );
+        return;
+    }
 
     try {
 
@@ -68,6 +78,22 @@ async function registerUser() {
         }
 
         alert("✅ Student Registered Successfully");
+
+        document.getElementById("name").value = "";
+        document.getElementById("college").value = "";
+        document.getElementById("skills").value = "";
+        document.getElementById("interests").value = "";
+        document.getElementById("projectIdea").value = "";
+        document.getElementById("domain").value = "";
+        document.getElementById("lookingFor").value = "";
+        
+        selectedAvatar = "avatar1.jpeg";
+        
+        document.getElementById(
+            "selectedAvatarPreview"
+        ).src = "/static/avatars/avatar1.jpeg";
+
+
 
     } catch (error) {
 
