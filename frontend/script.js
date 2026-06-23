@@ -2,7 +2,7 @@
 // Register Student
 // =========================
 let selectedAvatar = "avatar1.jpeg";
-function selectAvatar(avatarFile){
+function selectAvatar(avatarFile, element){
 
     selectedAvatar = avatarFile;
 
@@ -19,11 +19,10 @@ function selectAvatar(avatarFile){
             );
         });
 
-    event.target.classList.add(
+    element.classList.add(
         "avatar-selected"
     );
 }
-
 async function registerUser() {
 
     const name = document.getElementById("name").value;
@@ -55,6 +54,11 @@ async function registerUser() {
                 })
             }
         );
+        console.log("Status:", response.status);
+
+        const data = await response.json();
+
+        console.log("Response:", data);
 
         const data = await response.json();
 
