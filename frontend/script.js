@@ -70,8 +70,6 @@ async function registerUser() {
 
         console.log("Response:", data);
 
-        const data = await response.json();
-
         if (!response.ok) {
             alert(data.detail || "Registration Failed");
             return;
