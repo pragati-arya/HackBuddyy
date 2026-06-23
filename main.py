@@ -15,14 +15,38 @@ models.Base.metadata.create_all(bind=engine)
 from sqlalchemy import text
 
 with engine.connect() as conn:
+
     try:
         conn.execute(
             text("ALTER TABLE students ADD COLUMN avatar VARCHAR(255)")
         )
         conn.commit()
-        print("Avatar column added")
-    except Exception as e:
-        print("Avatar column already exists or error:", e)
+    except Exception:
+        pass
+
+    try:
+        conn.execute(
+            text("ALTER TABLE students ADD COLUMN linkedin VARCHAR(255)")
+        )
+        conn.commit()
+    except Exception:
+        pass
+
+    try:
+        conn.execute(
+            text("ALTER TABLE students ADD COLUMN github VARCHAR(255)")
+        )
+        conn.commit()
+    except Exception:
+        pass
+
+    try:
+        conn.execute(
+            text("ALTER TABLE students ADD COLUMN portfolio VARCHAR(255)")
+        )
+        conn.commit()
+    except Exception:
+        pass
 
 app = FastAPI()
 
@@ -94,7 +118,11 @@ def register(student: schemas.StudentCreate):
         project_idea=student.project_idea,
         domain=student.domain,
         looking_for=student.looking_for,
-        avatar=student.avatar
+        avatar=student.avatar,
+
+        linkedin=student.linkedin,
+        github=student.github,
+        portfolio=student.portfolio
     )
 
     db.add(new_student)

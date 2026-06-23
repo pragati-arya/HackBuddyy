@@ -30,3 +30,7 @@ class StudentDB(Base):
     looking_for = Column(String)
 
     avatar = Column(String)
+
+    linkedin = Column(String, nullable=True)
+    github = Column(String, nullable=True)
+    portfolio = Column(String, nullable=True)

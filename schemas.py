@@ -19,6 +19,10 @@ class StudentCreate(BaseModel):
 
     avatar: str
 
+    linkedin: str | None = None
+    github: str | None = None
+    portfolio: str | None = None
+
 
 class StudentResponse(BaseModel):
 
@@ -39,6 +43,10 @@ class StudentResponse(BaseModel):
     looking_for: str
 
     avatar: str
+
+    linkedin: str | None = None
+    github: str | None = None
+    portfolio: str | None = None
 
     class Config:
         from_attributes = True
