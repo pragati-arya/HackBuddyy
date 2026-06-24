@@ -364,11 +364,9 @@ def top_match(name: str):
     result = find_match(name)
 
     if "matches" not in result:
-
         return result
 
     if len(result["matches"]) == 0:
-
         return {
             "message": "No matches found"
         }
