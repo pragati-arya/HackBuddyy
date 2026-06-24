@@ -289,6 +289,7 @@ def find_match(name: str):
             "id": student.id,
             "avatar": student.avatar,
             "name": student.name,
+            "college": student.college,
             "match_percentage": total_score,
            
         })

@@ -118,14 +118,15 @@ async function registerUser() {
 // =========================
 // Find Best Match
 // =========================
-
 async function findMatch() {
 
     const name = document.getElementById("searchName").value;
 
     try {
 
-        const response = await fetch(`/top-match/${name}`);
+        const response = await fetch(
+            `/top-match/${name}`
+        );
 
         const data = await response.json();
 
@@ -148,23 +149,20 @@ async function findMatch() {
 
                 <h2>🎯 Best Match Found</h2>
 
+                <img
+                    src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
+                    class="student-avatar">
+
                 <h3>👤 ${match.name}</h3>
 
-                <p>🏫 ${match.college}</p>
+                <p>🏫 ${match.college || 'Not Available'}</p>
 
-                <p>🚀 ${match.project_idea}</p>
+                <p>🎯 Match Score:
+                ${match.match_percentage}%</p>
 
-                <p>🎯 Match Score: ${match.match_percentage}%</p>
-
-                <p>💻 Common Skills:
-                ${match.common_skills ?
-                    match.common_skills.join(", ")
-                    : "No common skills"}</p>
-
-                <p>❤️ Common Interests:
-                ${match.common_interests ?
-                    match.common_interests.join(", ")
-                    : "No common interests"}</p>
+                <button onclick="openProfile(${match.id})">
+                    View Profile
+                </button>
 
             </div>
         `;
@@ -180,7 +178,6 @@ async function findMatch() {
         `;
     }
 }
-
 // =========================
 // View All Matches
 // =========================
