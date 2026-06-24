@@ -175,15 +175,25 @@ async function findMatch() {
 
     } catch (error) {
 
-        console.error(error);
+    console.error("MATCH ERROR:", error);
 
+    document.getElementById("results").innerHTML = `
+        <div class="result-box">
+            <h3>❌ ${error}</h3>
+        </div>
+    `;
+    }catch (error) {
+        
+        console.error("MATCH ERROR:", error);
+    
         document.getElementById("results").innerHTML = `
             <div class="result-box">
-                <h3>❌ Something went wrong</h3>
-                <p>Please try again.</p>
+                <h3>❌ ${error}</h3>
             </div>
         `;
     }
+
+        
 }
 
 // =========================
