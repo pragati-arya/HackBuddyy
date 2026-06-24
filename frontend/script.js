@@ -187,7 +187,8 @@ async function findMatch() {
 
         document.getElementById("results").innerHTML = `
             <div class="result-box">
-                <h3>❌ Backend Not Running</h3>
+                <h3>❌ Error Occurred</h3>
+                <p>${error}</p>
             </div>
         `;
     }
