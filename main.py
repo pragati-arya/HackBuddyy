@@ -290,9 +290,7 @@ def find_match(name: str):
             "avatar": student.avatar,
             "name": student.name,
             "college": student.college,
-            "linkedin": student.linkedin,
-            "github": student.github,
-            "portfolio": student.portfolio,
+            
             "match_percentage": total_score,
            
         })
@@ -384,9 +382,6 @@ def top_match(name: str):
             "avatar": best["avatar"],
             "name": best["name"],
             "college": best["college"],
-            "linkedin": best.get("linkedin"),
-            "github": best.get("github"),
-            "portfolio": best.get("portfolio"),
             "match_percentage": best["match_percentage"]
         }
     }
