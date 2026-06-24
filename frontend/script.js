@@ -125,13 +125,10 @@ async function findMatch() {
 
     try {
 
-        const response = await fetch(
-            `/top-match/${name}`
-        );
+        const response = await fetch(`/top-match/${name}`);
 
         const data = await response.json();
 
-        // Student not found
         if (data.message) {
 
             document.getElementById("results").innerHTML = `
@@ -151,18 +148,13 @@ async function findMatch() {
 
                 <h2>🎯 Best Match Found</h2>
 
-                <img
-                    src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
-                    class="student-avatar">
-
                 <h3>👤 ${match.name}</h3>
 
                 <p>🏫 ${match.college}</p>
 
                 <p>🚀 ${match.project_idea}</p>
 
-                <p>🎯 Match Score:
-                ${match.match_percentage}%</p>
+                <p>🎯 Match Score: ${match.match_percentage}%</p>
 
                 <p>💻 Common Skills:
                 ${match.common_skills.join(", ")}</p>
@@ -175,25 +167,14 @@ async function findMatch() {
 
     } catch (error) {
 
-    console.error("MATCH ERROR:", error);
+        console.error(error);
 
-    document.getElementById("results").innerHTML = `
-        <div class="result-box">
-            <h3>❌ ${error}</h3>
-        </div>
-    `;
-    }catch (error) {
-        
-        console.error("MATCH ERROR:", error);
-    
         document.getElementById("results").innerHTML = `
             <div class="result-box">
-                <h3>❌ ${error}</h3>
+                <h3>❌ Something went wrong</h3>
             </div>
         `;
     }
-
-        
 }
 
 // =========================
