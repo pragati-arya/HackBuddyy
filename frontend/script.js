@@ -157,10 +157,14 @@ async function findMatch() {
                 <p>🎯 Match Score: ${match.match_percentage}%</p>
 
                 <p>💻 Common Skills:
-                ${match.common_skills.join(", ")}</p>
+                ${match.common_skills ?
+                    match.common_skills.join(", ")
+                    : "No common skills"}</p>
 
                 <p>❤️ Common Interests:
-                ${match.common_interests.join(", ")}</p>
+                ${match.common_interests ?
+                    match.common_interests.join(", ")
+                    : "No common interests"}</p>
 
             </div>
         `;
