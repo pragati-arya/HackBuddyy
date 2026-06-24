@@ -110,7 +110,7 @@ async function registerUser() {
     } catch (error) {
 
         console.error(error);
-        alert("❌ Unable to connect to backend");
+        alert("❌ wrong Input");
     }
 }
 
@@ -188,7 +188,7 @@ async function findMatch() {
         document.getElementById("results").innerHTML = `
             <div class="result-box">
                 <h3>❌ Error Occurred</h3>
-                <p>${error}</p>
+                <p>Please enter the exact registered name.</p>
             </div>
         `;
     }
