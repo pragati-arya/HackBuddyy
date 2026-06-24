@@ -333,3 +333,47 @@ def top_match(name: str):
             "match_percentage": best["match_percentage"],
         }
     }
+# =========================
+# Serve Profile Page
+# =========================
+
+@app.get("/profile")
+def profile_page():
+    return FileResponse("frontend/profile.html")
+
+
+# =========================
+# Get Student Profile by ID
+# =========================
+
+@app.get("/profile/{student_id}")
+def get_profile(student_id: int):
+    db: Session = SessionLocal()
+
+    try:
+        student = (
+            db.query(models.StudentDB)
+            .filter(models.StudentDB.id == student_id)
+            .first()
+        )
+
+        if student is None:
+            raise HTTPException(status_code=404, detail="Student not found")
+
+        return {
+            "id": student.id,
+            "name": student.name,
+            "college": student.college,
+            "skills": student.skills,
+            "interests": student.interests,
+            "project_idea": student.project_idea,
+            "domain": student.domain,
+            "looking_for": student.looking_for,
+            "avatar": student.avatar or "",
+            "linkedin": student.linkedin or "",
+            "github": student.github or "",
+            "portfolio": student.portfolio or "",
+        }
+
+    finally:
+        db.close()

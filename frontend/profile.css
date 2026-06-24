@@ -1,0 +1,341 @@
+/* =============================================
+   HackBuddy — Profile Page
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:           #0a0a1a;
+  --surface:      rgba(255, 255, 255, 0.05);
+  --surface-hi:   rgba(255, 255, 255, 0.09);
+  --border:       rgba(255, 255, 255, 0.10);
+  --blue:         #6c63ff;
+  --blue-light:   #a89cff;
+  --pink:         #ff6b9d;
+  --pink-light:   #ffaac8;
+  --text:         #f0f0f8;
+  --text-muted:   #9090b0;
+  --radius:       18px;
+  --radius-sm:    10px;
+  --shadow:       0 8px 40px rgba(0,0,0,0.45);
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Blobs ── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-1 {
+  width: 520px; height: 520px;
+  background: var(--blue);
+  top: -160px; left: -160px;
+}
+.blob-2 {
+  width: 420px; height: 420px;
+  background: var(--pink);
+  bottom: -120px; right: -120px;
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: rgba(10, 10, 26, 0.80);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.brand-hack  { color: var(--blue-light); }
+.brand-buddy { color: var(--pink-light); }
+
+.back-btn {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.back-btn:hover {
+  color: var(--text);
+  border-color: var(--blue-light);
+  background: rgba(108, 99, 255, 0.10);
+}
+
+/* ── Main layout ── */
+.profile-main {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+/* ── Loading ── */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: var(--text-muted);
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--blue-light);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Error ── */
+.error-state {
+  text-align: center;
+  padding: 80px 0;
+}
+.error-icon { font-size: 3rem; margin-bottom: 16px; }
+.error-state h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+.error-state p { color: var(--text-muted); margin-bottom: 28px; }
+
+.btn-primary {
+  display: inline-block;
+  padding: 11px 28px;
+  background: linear-gradient(135deg, var(--blue), var(--pink));
+  color: #fff;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+
+/* ── Profile card ── */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: fadeUp 0.45s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Card header ── */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  padding: 36px 36px 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(108, 99, 255, 0.12),
+    rgba(255, 107, 157, 0.08)
+  );
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Avatar ── */
+.avatar-ring {
+  flex-shrink: 0;
+  width: 108px; height: 108px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--blue), var(--pink));
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.18);
+}
+.profile-avatar {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: var(--bg);
+}
+
+/* ── Header text ── */
+.header-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 6px;
+}
+.profile-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.profile-college {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+
+/* ── Social buttons ── */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.social-btn:hover { transform: translateY(-2px); opacity: 0.85; }
+
+.social-btn.linkedin {
+  background: rgba(10, 102, 194, 0.18);
+  border-color: rgba(10, 102, 194, 0.40);
+  color: #6baed6;
+}
+.social-btn.github {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--text);
+}
+.social-btn.portfolio {
+  background: rgba(108, 99, 255, 0.14);
+  border-color: rgba(108, 99, 255, 0.35);
+  color: var(--blue-light);
+}
+
+/* ── Detail grid ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.detail-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 28px;
+  background: var(--bg);
+  transition: background 0.2s;
+}
+.detail-card:hover { background: var(--surface-hi); }
+.detail-card.wide { grid-column: 1 / -1; }
+
+.detail-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.detail-content { flex: 1; min-width: 0; }
+.detail-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.detail-value {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* ── Tags ── */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  padding: 4px 12px;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.tag-blue {
+  background: rgba(108, 99, 255, 0.18);
+  color: var(--blue-light);
+  border: 1px solid rgba(108, 99, 255, 0.30);
+}
+.tag-pink {
+  background: rgba(255, 107, 157, 0.15);
+  color: var(--pink-light);
+  border: 1px solid rgba(255, 107, 157, 0.28);
+}
+.no-data { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .navbar { padding: 14px 18px; }
+
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 28px 20px 22px;
+  }
+  .social-links { justify-content: center; }
+
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-card.wide { grid-column: 1; }
+  .detail-card { padding: 20px 20px; }
+
+  .profile-name { font-size: 1.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card { animation: none; }
+  .spinner { animation: none; }
+}
