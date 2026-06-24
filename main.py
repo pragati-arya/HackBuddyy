@@ -373,6 +373,12 @@ def top_match(name: str):
         }
 
     return {
-        "student": name,
-        "best_match": result["matches"][0]
+    "student": name,
+    "best_match": {
+        "id": best["id"],
+        "avatar": best["avatar"],
+        "name": best["name"],
+        "college": best["college"],
+        "match_percentage": best["match_percentage"]
     }
+}

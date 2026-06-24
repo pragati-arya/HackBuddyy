@@ -141,32 +141,35 @@ async function findMatch() {
 
             return;
         }
-
         const match = data.best_match;
 
         document.getElementById("results").innerHTML = `
             <div class="card">
-
+        
                 <h2>🎯 Best Match Found</h2>
-
-                <img
-                    src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
-                    class="student-avatar">
-
-                <h3>👤 ${match.name}</h3>
-
-                <p>🏫 ${match.college || 'Not Available'}</p>
-
-                <p>🎯 Match Score:
-                ${match.match_percentage}%</p>
-
-                <button onclick="openProfile(${match.id})">
-                    View Profile
-                </button>
-
+        
+                <div class="result-box">
+        
+                    <img
+                        src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
+                        class="student-avatar">
+        
+                    <h3>👤 ${match.name}</h3>
+        
+                    <p>🏫 ${match.college}</p>
+        
+                    <p>🎯 Match Score:
+                    ${match.match_percentage}%</p>
+        
+                    <button onclick="openProfile(${match.id})">
+                        View Profile
+                    </button>
+        
+                </div>
+        
             </div>
         `;
-
+        
     } catch (error) {
 
         console.error(error);
