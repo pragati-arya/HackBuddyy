@@ -125,35 +125,22 @@ async function findMatch() {
 
     try {
 
-        const response = await fetch(`/top-match/${name}`
-            
+        const response = await fetch(
+            `/top-match/${name}`
         );
 
         const data = await response.json();
 
+        // Student not found
         if (data.message) {
 
             document.getElementById("results").innerHTML = `
-                <div class="card">
-            
-                    <h2>🎯 Best Match Found</h2>
-            
-                    <img
-                        src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
-                        class="student-avatar">
-            
-                    <h3>👤 ${match.name}</h3>
-            
-                    <p>🎯 Match Score:
-                    ${match.match_percentage}%</p>
-            
-                    <button
-                        onclick="openProfile(${match.id})">
-                        View Profile
-                    </button>
-            
+                <div class="result-box">
+                    <h3>❌ ${data.message}</h3>
+                    <p>Please enter the exact registered name.</p>
                 </div>
             `;
+
             return;
         }
 
@@ -163,20 +150,25 @@ async function findMatch() {
             <div class="card">
 
                 <h2>🎯 Best Match Found</h2>
+
                 <img
-                    src="/static/avatars/${match.avatar}"
+                    src="/static/avatars/${match.avatar || 'avatar1.jpeg'}"
                     class="student-avatar">
 
                 <h3>👤 ${match.name}</h3>
 
-                
+                <p>🏫 ${match.college}</p>
 
-                <p>🎯 Match Score: ${match.match_percentage}%</p>
+                <p>🚀 ${match.project_idea}</p>
 
-                <button
-                    onclick="openProfile(${match.id})">
-                    View Profile
-                </button>
+                <p>🎯 Match Score:
+                ${match.match_percentage}%</p>
+
+                <p>💻 Common Skills:
+                ${match.common_skills.join(", ")}</p>
+
+                <p>❤️ Common Interests:
+                ${match.common_interests.join(", ")}</p>
 
             </div>
         `;
@@ -187,13 +179,12 @@ async function findMatch() {
 
         document.getElementById("results").innerHTML = `
             <div class="result-box">
-                <h3>❌ Error Occurred</h3>
-                <p>Please enter the exact registered name.</p>
+                <h3>❌ Something went wrong</h3>
+                <p>Please try again.</p>
             </div>
         `;
     }
 }
-
 
 // =========================
 // View All Matches
