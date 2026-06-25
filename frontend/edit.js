@@ -2,16 +2,11 @@
   const params    = new URLSearchParams(window.location.search);
   const studentId = params.get("id");
 
-  // Set back button href
-  document.getElementById("back-btn").href    = `/profile?id=${studentId}`;
-  document.getElementById("cancel-btn").href  = `/profile?id=${studentId}`;
+  document.getElementById("back-btn").href   = `/profile?id=${studentId}`;
+  document.getElementById("cancel-btn").href = `/profile?id=${studentId}`;
 
-  if (!studentId) {
-    window.location.href = "/";
-    return;
-  }
+  if (!studentId) { window.location.href = "/"; return; }
 
-  // ── Load student data ──────────────────────────────────
   let student;
   try {
     const res = await fetch(`/profile/${studentId}`);
@@ -22,7 +17,6 @@
     return;
   }
 
-  // ── Avatars list ───────────────────────────────────────
   const AVATARS = [
     "avatar1.jpeg","avatar2.jpeg","avatar3.jpeg","avatar4.jpeg",
     "avatar5.jpeg","avatar6.jpeg","avatar7.jpeg","avatar8.jpeg",
@@ -32,20 +26,18 @@
   let selectedAvatar = student.avatar || AVATARS[0];
   let verifiedName   = "";
 
-  // ── STEP 1: Identity verification ─────────────────────
+  // ── STEP 1: Verify ────────────────────────────────────
   const verifyBtn   = document.getElementById("verify-btn");
   const verifyInput = document.getElementById("verify-name");
   const verifyError = document.getElementById("verify-error");
-  const stepVerify  = document.getElementById("step-verify");
-  const stepEdit    = document.getElementById("step-edit");
 
   verifyBtn.addEventListener("click", () => {
     const typed = verifyInput.value.trim();
     if (typed.toLowerCase() === student.name.toLowerCase()) {
       verifiedName = student.name;
       verifyError.classList.add("hidden");
-      stepVerify.classList.add("hidden");
-      stepEdit.classList.remove("hidden");
+      document.getElementById("step-verify").classList.add("hidden");
+      document.getElementById("step-edit").classList.remove("hidden");
       populateForm();
     } else {
       verifyError.classList.remove("hidden");
@@ -58,52 +50,55 @@
     if (e.key === "Enter") verifyBtn.click();
   });
 
-  // ── STEP 2: Populate form ──────────────────────────────
+  // ── STEP 2: Populate ──────────────────────────────────
   function populateForm() {
     document.getElementById("edit-name-display").textContent = student.name;
-
-    // Avatar preview
     updateAvatarPreview(selectedAvatar);
 
-    // Build avatar grid
     const grid = document.getElementById("avatar-grid");
     AVATARS.forEach(av => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "av-item" + (av === selectedAvatar ? " av-selected" : "");
-      wrapper.innerHTML = `<img src="/static/avatars/${av}" alt="${av}"/>`;
-      wrapper.addEventListener("click", () => {
+      const wrap = document.createElement("div");
+      wrap.className = "av-item" + (av === selectedAvatar ? " av-selected" : "");
+      wrap.innerHTML = `<img src="/static/avatars/${av}" alt="${av}"/>`;
+      wrap.addEventListener("click", () => {
         selectedAvatar = av;
         document.querySelectorAll(".av-item").forEach(el => el.classList.remove("av-selected"));
-        wrapper.classList.add("av-selected");
+        wrap.classList.add("av-selected");
         updateAvatarPreview(av);
       });
-      grid.appendChild(wrapper);
+      grid.appendChild(wrap);
     });
 
-    // Fill fields
-    document.getElementById("f-college").value   = student.college   || "";
-    document.getElementById("f-skills").value    = student.skills    || "";
-    document.getElementById("f-interests").value = student.interests || "";
-    document.getElementById("f-project").value   = student.project_idea || "";
-    document.getElementById("f-domain").value    = student.domain    || "";
+    document.getElementById("f-name").value      = student.name        || "";
+    document.getElementById("f-college").value   = student.college     || "";
+    document.getElementById("f-skills").value    = student.skills      || "";
+    document.getElementById("f-interests").value = student.interests   || "";
+    document.getElementById("f-project").value   = student.project_idea|| "";
+    document.getElementById("f-domain").value    = student.domain      || "";
     document.getElementById("f-looking").value   = student.looking_for || "";
-    document.getElementById("f-linkedin").value  = student.linkedin  || "";
-    document.getElementById("f-github").value    = student.github    || "";
-    document.getElementById("f-portfolio").value = student.portfolio || "";
+    document.getElementById("f-linkedin").value  = student.linkedin    || "";
+    document.getElementById("f-github").value    = student.github      || "";
+    document.getElementById("f-portfolio").value = student.portfolio   || "";
   }
 
   function updateAvatarPreview(av) {
-    const img = document.getElementById("edit-avatar-preview");
-    img.src = `/static/avatars/${av}`;
+    document.getElementById("edit-avatar-preview").src = `/static/avatars/${av}`;
   }
 
-  // ── Save ───────────────────────────────────────────────
+  // ── Save ──────────────────────────────────────────────
   document.getElementById("save-btn").addEventListener("click", async () => {
     const saveBtn     = document.getElementById("save-btn");
     const saveError   = document.getElementById("save-error");
     const saveSuccess = document.getElementById("save-success");
 
+    const name   = document.getElementById("f-name").value.trim();
     const skills = document.getElementById("f-skills").value.trim();
+
+    if (!name) {
+      saveError.textContent = "❌ Name cannot be empty.";
+      saveError.classList.remove("hidden");
+      return;
+    }
     if (!skills) {
       saveError.textContent = "❌ Skills cannot be empty.";
       saveError.classList.remove("hidden");
@@ -117,6 +112,7 @@
 
     const payload = {
       confirm_name: verifiedName,
+      name:         name,
       college:      document.getElementById("f-college").value.trim(),
       skills:       skills,
       interests:    document.getElementById("f-interests").value.trim(),
@@ -135,7 +131,6 @@
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(payload),
       });
-
       const data = await res.json();
 
       if (res.ok) {

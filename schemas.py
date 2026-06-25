@@ -53,6 +53,7 @@ class StudentResponse(BaseModel):
 
 class StudentUpdate(BaseModel):
     confirm_name: str      # used for identity verification
+    name: str
     college: str
     skills: str
     interests: str = ""

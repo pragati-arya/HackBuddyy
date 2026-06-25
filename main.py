@@ -778,6 +778,7 @@ def update_profile(student_id: int, student: schemas.StudentUpdate):
         if existing.name.strip().lower() != student.confirm_name.strip().lower():
             raise HTTPException(status_code=403, detail="Name does not match. Access denied.")
 
+        existing.name         = student.name
         existing.college      = student.college
         existing.skills       = student.skills
         existing.interests    = student.interests

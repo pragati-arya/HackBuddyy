@@ -12,6 +12,7 @@
   <div class="blob blob-1">✦</div>
   <div class="blob blob-2">✦</div>
   <div class="blob blob-3">✦</div>
+  <div class="blob blob-4">✦</div>
 
   <nav class="navbar">
     <a href="/" class="nav-brand">
@@ -39,12 +40,12 @@
     <div id="step-edit" class="edit-card hidden">
 
       <div class="edit-header">
-        <div id="edit-avatar-ring" class="avatar-ring">
+        <div class="avatar-ring">
           <img id="edit-avatar-preview" src="" alt="Avatar" class="edit-avatar"/>
         </div>
         <div>
           <h1 id="edit-name-display" class="edit-name"></h1>
-          <p class="edit-label-muted">Editing your profile</p>
+          <p class="edit-label-muted">✏️ Editing your profile</p>
         </div>
       </div>
 
@@ -59,12 +60,20 @@
         <h3 class="section-title">🏫 Basic Info</h3>
         <div class="form-grid">
           <div class="input-group">
-            <label>College / University</label>
+            <label>Full Name <span class="required">*</span></label>
+            <input type="text" id="f-name" placeholder="Your full name"/>
+          </div>
+          <div class="input-group">
+            <label>College / University <span class="required">*</span></label>
             <input type="text" id="f-college" placeholder="Your college"/>
           </div>
           <div class="input-group">
             <label>Domain</label>
             <input type="text" id="f-domain" placeholder="e.g. AI, Web3, HealthTech"/>
+          </div>
+          <div class="input-group">
+            <label>Looking For</label>
+            <input type="text" id="f-looking" placeholder="e.g. Frontend Developer"/>
           </div>
         </div>
       </section>
@@ -86,14 +95,10 @@
 
       <!-- Project -->
       <section class="form-section">
-        <h3 class="section-title">🚀 Project & Team</h3>
+        <h3 class="section-title">🚀 Project Idea</h3>
         <div class="input-group full-width">
           <label>Project Idea</label>
           <textarea id="f-project" rows="3" placeholder="Describe your hackathon project idea..."></textarea>
-        </div>
-        <div class="input-group full-width">
-          <label>Looking For</label>
-          <input type="text" id="f-looking" placeholder="e.g. Frontend Developer, UI/UX Designer"/>
         </div>
       </section>
 
@@ -118,7 +123,7 @@
 
       <!-- Actions -->
       <div class="form-actions">
-        <div id="save-error"  class="error-msg hidden"></div>
+        <div id="save-error"   class="error-msg hidden"></div>
         <div id="save-success" class="success-msg hidden">✅ Profile updated successfully!</div>
         <button id="save-btn" class="btn-save">💾 Save Changes</button>
         <a id="cancel-btn" href="#" class="btn-cancel">Cancel</a>
