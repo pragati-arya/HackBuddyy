@@ -50,3 +50,16 @@ class StudentResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class StudentUpdate(BaseModel):
+    confirm_name: str      # used for identity verification
+    college: str
+    skills: str
+    interests: str = ""
+    project_idea: str = ""
+    domain: str = ""
+    looking_for: str = ""
+    avatar: str = ""
+    linkedin: str = ""
+    github: str = ""
+    portfolio: str = ""

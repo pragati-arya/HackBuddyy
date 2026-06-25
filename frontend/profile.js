@@ -85,6 +85,8 @@
   setText("profile-project", student.project_idea);
   setText("profile-domain", student.domain);
   setText("profile-looking", student.looking_for);
-
+// Set edit button link
+const editBtn = document.getElementById("edit-profile-btn");
+if (editBtn) editBtn.href = `/edit?id=${studentId}`;
   showCard();
 })();

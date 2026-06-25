@@ -1,0 +1,256 @@
+/* =============================================
+   HackBuddy — Edit Profile Page
+   ============================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #0a0a1a;
+  --surface:     rgba(255,255,255,0.05);
+  --surface-hi:  rgba(255,255,255,0.09);
+  --border:      rgba(255,255,255,0.10);
+  --blue:        #6c63ff;
+  --blue-light:  #a89cff;
+  --pink:        #ff6b9d;
+  --pink-light:  #ffaac8;
+  --text:        #f0f0f8;
+  --text-muted:  #9090b0;
+  --radius:      18px;
+  --green:       #4ade80;
+  --red:         #f87171;
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Sparkles ── */
+.blob {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  font-size: 1rem;
+  opacity: 0.4;
+  color: var(--blue-light);
+  animation: twinkle 3s ease-in-out infinite;
+}
+.blob-1 { top: 10%; left:  5%; animation-delay: 0s; }
+.blob-2 { top: 30%; right: 6%; animation-delay: 1s; font-size: 0.75rem; }
+.blob-3 { bottom: 20%; left: 8%; animation-delay: 2s; font-size: 0.7rem; }
+@keyframes twinkle {
+  0%,100% { opacity: 0.3; transform: scale(1);    }
+  50%      { opacity: 0.7; transform: scale(1.3); }
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+  background: rgba(10,10,26,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem;
+  font-weight: 700; text-decoration: none; }
+.brand-hack  { color: var(--blue-light); }
+.brand-buddy { color: var(--pink-light); }
+.back-btn {
+  color: var(--text-muted); text-decoration: none; font-size: 0.88rem;
+  font-weight: 500; padding: 7px 18px; border: 1px solid var(--border);
+  border-radius: 40px; transition: color 0.2s, border-color 0.2s;
+}
+.back-btn:hover { color: var(--text); border-color: var(--blue-light); }
+
+/* ── Main ── */
+.edit-main {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto; padding: 48px 20px 80px;
+}
+
+/* ── Step 1: Verify card ── */
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(20px);
+  padding: 52px 44px;
+  text-align: center;
+  animation: fadeUp 0.4s ease both;
+}
+.step-icon { font-size: 3rem; margin-bottom: 16px; }
+.step-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem; font-weight: 700; margin-bottom: 8px;
+}
+.step-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; }
+
+/* ── Step 2: Edit card ── */
+.edit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+}
+
+/* ── Edit header ── */
+.edit-header {
+  display: flex; align-items: center; gap: 24px;
+  padding: 30px 36px 24px;
+  background: linear-gradient(135deg,
+    rgba(108,99,255,0.15),
+    rgba(255,107,157,0.10));
+  border-bottom: 1px solid var(--border);
+}
+.avatar-ring {
+  width: 90px; height: 90px; border-radius: 50%; padding: 3px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--blue), var(--pink));
+}
+.edit-avatar {
+  width: 100%; height: 100%; border-radius: 50%;
+  object-fit: cover; display: block; background: var(--bg);
+}
+.edit-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem; font-weight: 700;
+}
+.edit-label-muted { color: var(--text-muted); font-size: 0.88rem; }
+
+/* ── Sections ── */
+.form-section {
+  padding: 28px 36px;
+  border-bottom: 1px solid var(--border);
+}
+.form-section:last-of-type { border-bottom: none; }
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 600;
+  color: var(--blue-light); margin-bottom: 18px;
+}
+
+/* ── Avatar grid ── */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+.av-item {
+  border-radius: 50%; overflow: hidden; cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, transform 0.15s;
+  aspect-ratio: 1;
+}
+.av-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.av-item:hover { transform: scale(1.08); border-color: var(--blue-light); }
+.av-item.av-selected {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255,107,157,0.35);
+  transform: scale(1.1);
+}
+
+/* ── Form grid ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── Input group ── */
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group.full-width { grid-column: 1 / -1; }
+.input-group label {
+  font-size: 0.78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+.input-group input,
+.input-group textarea {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  resize: vertical;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: var(--blue-light);
+  background: rgba(108,99,255,0.08);
+}
+.input-group input::placeholder,
+.input-group textarea::placeholder { color: var(--text-muted); }
+
+.required { color: var(--pink); }
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-block; margin-top: 12px;
+  padding: 13px 36px;
+  background: linear-gradient(135deg, var(--blue), var(--pink));
+  color: #fff; border: none; border-radius: 40px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.form-actions {
+  padding: 28px 36px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.btn-save {
+  padding: 13px 36px;
+  background: linear-gradient(135deg, var(--blue), var(--pink));
+  color: #fff; border: none; border-radius: 40px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-save:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+.btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-cancel {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.95rem; font-weight: 500;
+  padding: 13px 20px; border-radius: 40px;
+  border: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-cancel:hover { color: var(--text); border-color: var(--text-muted); }
+
+/* ── Messages ── */
+.error-msg   { color: var(--red);   font-size: 0.9rem; font-weight: 500; }
+.success-msg { color: var(--green); font-size: 0.9rem; font-weight: 500; }
+.hidden { display: none !important; }
+
+/* ── Shake animation ── */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .navbar { padding: 13px 18px; }
+  .step-card { padding: 36px 22px; }
+  .edit-header { flex-direction: column; align-items: center; text-align: center; padding: 24px 20px; }
+  .form-section { padding: 22px 20px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .avatar-grid { grid-template-columns: repeat(4, 1fr); }
+  .form-actions { padding: 22px 20px; flex-direction: column; align-items: stretch; }
+  .btn-save, .btn-cancel { text-align: center; }
+}

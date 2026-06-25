@@ -756,3 +756,47 @@ app.mount(
     StaticFiles(directory="frontend"),
     name="static"
 )
+# =========================
+# Edit Student Profile
+# =========================
+
+@app.put("/profile/{student_id}")
+def update_profile(student_id: int, student: schemas.StudentUpdate):
+    db: Session = SessionLocal()
+
+    try:
+        existing = (
+            db.query(models.StudentDB)
+            .filter(models.StudentDB.id == student_id)
+            .first()
+        )
+
+        if existing is None:
+            raise HTTPException(status_code=404, detail="Student not found")
+
+        # Identity check — name must match
+        if existing.name.strip().lower() != student.confirm_name.strip().lower():
+            raise HTTPException(status_code=403, detail="Name does not match. Access denied.")
+
+        existing.college      = student.college
+        existing.skills       = student.skills
+        existing.interests    = student.interests
+        existing.project_idea = student.project_idea
+        existing.domain       = student.domain
+        existing.looking_for  = student.looking_for
+        existing.avatar       = student.avatar
+        existing.linkedin     = student.linkedin
+        existing.github       = student.github
+        existing.portfolio    = student.portfolio
+
+        db.commit()
+        db.refresh(existing)
+
+        return {"message": "Profile updated successfully"}
+
+    finally:
+        db.close()
+
+@app.get("/edit")
+def edit_page():
+    return FileResponse("frontend/edit.html")

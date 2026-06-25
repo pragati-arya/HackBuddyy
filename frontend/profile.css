@@ -394,3 +394,13 @@ body::after {
   body::before,
   body::after  { animation: none; }
 }
+.edit-profile-btn-wrap { margin-top: 14px; }
+.edit-profile-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 22px;
+  background: linear-gradient(135deg, #6c63ff, #ff6b9d);
+  color: #fff; text-decoration: none;
+  border-radius: 40px; font-size: 0.88rem; font-weight: 600;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.edit-profile-btn:hover { opacity: 0.88; transform: translateY(-2px); }

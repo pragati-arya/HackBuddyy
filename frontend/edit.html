@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HackBuddy — Edit Profile</title>
+  <link rel="stylesheet" href="/static/edit.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="blob blob-1">✦</div>
+  <div class="blob blob-2">✦</div>
+  <div class="blob blob-3">✦</div>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <span class="brand-hack">Hack</span><span class="brand-buddy">Buddy</span>
+    </a>
+    <a id="back-btn" href="#" class="back-btn">← Back to Profile</a>
+  </nav>
+
+  <main class="edit-main">
+
+    <!-- STEP 1: Identity Verification -->
+    <div id="step-verify" class="step-card">
+      <div class="step-icon">🔐</div>
+      <h2 class="step-title">Verify Your Identity</h2>
+      <p class="step-sub">Type your full name exactly as registered to unlock editing.</p>
+      <div class="input-group">
+        <label>Your Registered Name</label>
+        <input type="text" id="verify-name" placeholder="e.g. Pragati Arya" autocomplete="off"/>
+      </div>
+      <div id="verify-error" class="error-msg hidden">❌ Name doesn't match. Try again.</div>
+      <button id="verify-btn" class="btn-primary">Unlock My Profile →</button>
+    </div>
+
+    <!-- STEP 2: Edit Form -->
+    <div id="step-edit" class="edit-card hidden">
+
+      <div class="edit-header">
+        <div id="edit-avatar-ring" class="avatar-ring">
+          <img id="edit-avatar-preview" src="" alt="Avatar" class="edit-avatar"/>
+        </div>
+        <div>
+          <h1 id="edit-name-display" class="edit-name"></h1>
+          <p class="edit-label-muted">Editing your profile</p>
+        </div>
+      </div>
+
+      <!-- Avatar Picker -->
+      <section class="form-section">
+        <h3 class="section-title">🎭 Choose Avatar</h3>
+        <div class="avatar-grid" id="avatar-grid"></div>
+      </section>
+
+      <!-- Basic Info -->
+      <section class="form-section">
+        <h3 class="section-title">🏫 Basic Info</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>College / University</label>
+            <input type="text" id="f-college" placeholder="Your college"/>
+          </div>
+          <div class="input-group">
+            <label>Domain</label>
+            <input type="text" id="f-domain" placeholder="e.g. AI, Web3, HealthTech"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills & Interests -->
+      <section class="form-section">
+        <h3 class="section-title">💻 Skills & Interests</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>Skills <span class="required">*</span></label>
+            <input type="text" id="f-skills" placeholder="Python, React, ML (comma-separated)"/>
+          </div>
+          <div class="input-group">
+            <label>Interests</label>
+            <input type="text" id="f-interests" placeholder="AI, Open Source (comma-separated)"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project -->
+      <section class="form-section">
+        <h3 class="section-title">🚀 Project & Team</h3>
+        <div class="input-group full-width">
+          <label>Project Idea</label>
+          <textarea id="f-project" rows="3" placeholder="Describe your hackathon project idea..."></textarea>
+        </div>
+        <div class="input-group full-width">
+          <label>Looking For</label>
+          <input type="text" id="f-looking" placeholder="e.g. Frontend Developer, UI/UX Designer"/>
+        </div>
+      </section>
+
+      <!-- Social Links -->
+      <section class="form-section">
+        <h3 class="section-title">🔗 Social Links</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>LinkedIn URL</label>
+            <input type="url" id="f-linkedin" placeholder="https://linkedin.com/in/..."/>
+          </div>
+          <div class="input-group">
+            <label>GitHub URL</label>
+            <input type="url" id="f-github" placeholder="https://github.com/..."/>
+          </div>
+          <div class="input-group full-width">
+            <label>Portfolio URL</label>
+            <input type="url" id="f-portfolio" placeholder="https://yourportfolio.com"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <div id="save-error"  class="error-msg hidden"></div>
+        <div id="save-success" class="success-msg hidden">✅ Profile updated successfully!</div>
+        <button id="save-btn" class="btn-save">💾 Save Changes</button>
+        <a id="cancel-btn" href="#" class="btn-cancel">Cancel</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/static/edit.js"></script>
+</body>
+</html>
